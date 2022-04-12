@@ -1,1 +1,0 @@
-# realtime-remix-supabase
