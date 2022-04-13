@@ -3,7 +3,8 @@ import supabase from "~/utils/supabase";
 
 export const loader = async ({ params: { url } }) => {
   const { data: customer, error } = await supabase
-    .from("customer")
+  .from("customer")
+  //May want to update this in the future to only return whats needed not everything 
     .select("*, queue(*)")
     .match({url})
     .single();
