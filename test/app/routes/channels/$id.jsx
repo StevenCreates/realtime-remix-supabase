@@ -4,7 +4,7 @@ import supabase from "~/utils/supabase";
 export const loader = async ({ params: { id } }) => {
   const { data: channel, error } = await supabase
     .from("channels")
-    .select("id, title, description, messages(id, content)")
+    .select("title, description, messages(id, content)")
     .match({ id })
     .single();
   if (error) {
@@ -23,13 +23,11 @@ export default () => {
       e.preventDefault();
       const formData = new FormData(e.target);
       const content = formData.get("content");
-      const {data, error} = await supabase
-      .from('messages')
-      .insert({content, channel_id: channel.id})
+      const {data, error} = await supabase.from('message').insert({content, channel_id: channel.id})
       if (error) {
           console.log(error.message)
       }
-    console.log({data})
+      console.log({data})
   }
   return (
     <div>
