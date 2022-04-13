@@ -5,8 +5,7 @@ export const loader = async ({ params: { url } }) => {
   const { data: customer, error } = await supabase
     .from("customer")
     .select("*, queue(*)")
-    // .match({id})
-    // .match({ id })
+    .match({url})
     .single();
   if (error) {
     console.log(error.message);
@@ -19,7 +18,6 @@ export const loader = async ({ params: { url } }) => {
 
 export default () => {
   const { customer } = useLoaderData();
-  
   const handleSubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
