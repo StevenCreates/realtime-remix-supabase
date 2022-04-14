@@ -41,14 +41,21 @@ export default () => {
     supabase
       .from(`messages:channel_id=eq.${channel.id}`)
       .on("*", (payload) => {
-        setMessages(current => [...current, {id: payload.new.id, content: payload.new.content}]);
+        // setMessages(current => [...current, {id: payload.new.id, content: payload.new.content}]);
         fetcher.load(`/channels/${channel.id}`)
       })
       .subscribe();
   }, []);
 
   useEffect(() => {
-    setMessages([...channel.messages]);
+    if(fetcher.data){
+      setMessages([...fetcher.data.channel.messages]);
+    }
+  }, [fetcher.data])
+
+
+  useEffect(() => {
+    setMessages([...channel.messages])
   }, [channel])
 
   return (

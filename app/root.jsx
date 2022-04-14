@@ -7,6 +7,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import styles from "~/styles/app.css"
 
 export const meta = () => ({
   charset: "utf-8",
@@ -23,15 +24,19 @@ export const loader = () => {
   }
 }
 
+export function links() {
+  return [{ rel: "stylesheet", href: styles }]
+}
+
 export default function App() {
   const { env } = useLoaderData();
   return (
-    <html lang="en">
+    <html className="h-full bg-gray-100" lang="en">
       <head>
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className='h-full'>
         <Outlet />
         <script dangerouslySetInnerHTML={{
           __html: `window.env= ${JSON.stringify(env)}`
