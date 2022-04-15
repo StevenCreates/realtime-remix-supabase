@@ -6,11 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useFetcher
+  useFetcher,
 } from "@remix-run/react";
 import { useEffect } from "react";
-import supabase from "~/utils/supabase"
-import styles from "~/styles/app.css"
+import supabase from "~/utils/supabase";
+import styles from "~/styles/app.css";
 
 export const meta = () => ({
   charset: "utf-8",
@@ -23,42 +23,47 @@ export const loader = () => {
     env: {
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_KEY: process.env.SUPABASE_KEY,
-    }
-  }
-}
+    },
+  };
+};
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }]
+  return [{ rel: "stylesheet", href: styles }];
 }
 
 export default function App() {
   const { env } = useLoaderData();
-  const fetcher = useFetcher()
+  const fetcher = useFetcher();
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        fetcher.submit({
-          accessToken: session.access_token
-        }, {
-        method: 'post',
-        action: '/auth/login'
-        })
+      if (event === "SIGNED_IN") {
+        fetcher.submit(
+          {
+            accessToken: session.access_token,
+          },
+          {
+            method: "post",
+            action: "/auth/login",
+          }
+        );
       }
-    })
-  }, [])
-  
+    });
+  }, []);
+
   return (
     <html className="h-full bg-gray-100" lang="en">
       <head>
         <Meta />
         <Links />
       </head>
-      <body className='h-full'>
+      <body className="h-full">
         <Outlet />
-        <script dangerouslySetInnerHTML={{
-          __html: `window.env= ${JSON.stringify(env)}`
-        }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.env= ${JSON.stringify(env)}`,
+          }}
+        />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { Queue } from "../../components/queue";
 import { EmptyState } from "../../components/emptystate";
 import { QueueHeader } from "../../components/queueheader";
-import {getSession} from '~/utils/cookie'
+import {getSession} from '~/utils/cookies'
 
 // Load data
 export const loader = async ({ params: { url }, request }) => {
   const session = await getSession(request.headers.get('Cookie'))
   const accessToken = session.get('accessToken')
 
-  console.log({accessToken})
+  supabase.auth.setAuth(accessToken);
 
   const { data: customer, error } = await supabase
     .from("customer")
