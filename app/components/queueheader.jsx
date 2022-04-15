@@ -1,13 +1,23 @@
 import React from "react";
 
 export const QueueHeader = ({ companyName }) => {
+
+    // Will need props for Links, isLive
+    
   return (
     <div className="mt-6 mb-6 flex items-center justify-center">
       <div className=" mx-auto">
         <div>
-          <h2 className="text-3xl font-semibold text-center mb-4 text-gray-700">
-            {companyName}
-          </h2>
+          <div className="w-full grid grid-cols-3">
+            <div></div>
+            <h2 className="text-3xl font-semibold text-center mb-4 text-gray-700">
+              {companyName}
+            </h2>
+    <div className="flex items-center justify-end">
+            <div className="mr-2 bg-teal-600 h-2 w-2 rounded-full animate-pulse"></div>
+            <span className=" text-slate-700">Live</span>
+    </div>
+          </div>
 
           <div className="flex flex-wrap justify-center gap-2">
             <button className="bg-slate-400 p-2 font-semibold text-white inline-flex items-center space-x-2 rounded">

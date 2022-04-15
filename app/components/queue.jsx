@@ -3,8 +3,8 @@ import React from "react";
 export const Queue = ({ list }) => {
   return (
     <div
-      style={{ "max-height": "26rem" }}
-      className="bg-white border border-gray-300 overflow-hidden overflow-y-scroll rounded-md"
+      style={{ "maxHeight": "26rem" }}
+      className="bg-white border -z-10 border-gray-300 overflow-hidden overflow-y-scroll rounded-md"
     >
       <ul className="divide-y divide-gray-300">
         {list.map((item, index) => (
@@ -64,7 +64,7 @@ export const Queue = ({ list }) => {
                       : index === 1
                       ? "text-indigo-500"
                       : "text-slate-700"
-                  } bg-white hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                  } bg-white hover:bg-slate-300 focus:bg-indigo-50`}
                 >
                   {index === 0 ? (
                     <svg

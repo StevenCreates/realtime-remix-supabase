@@ -1,15 +1,17 @@
 import supabase from "~/utils/supabase";
 import { Link } from "@remix-run/react";
+
 export default () => {
 
-  const handleLogin = async (e) => {
+
+  const handleRegister = async (e) => {
     e.preventDefault()
 
     const formData = new FormData(e.target)
     const email = formData.get('email')
     const password = formData.get('password')
 
-    const {data, error} = await supabase.auth.signIn({
+    const {data, error} = await supabase.auth.signUp({
       email,
       password
     })
@@ -27,23 +29,23 @@ export default () => {
             alt="Workflow"
           /> */}
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+           Create Your Account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or{" "}
             <Link
-              to="/register"
+              to="/login"
               className="font-medium text-violet-600 hover:text-violet-500"
             >
               {/* start your 7-day free trial (coming soon) */}
-              create your account
+              already have an account?
             </Link>
           </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6"  onSubmit={handleLogin}>
+            <form className="space-y-6"  onSubmit={handleRegister}>
               <div>
                 <label
                   htmlFor="email"

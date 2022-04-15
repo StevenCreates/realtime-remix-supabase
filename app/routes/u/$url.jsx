@@ -4,9 +4,15 @@ import { useEffect, useState } from "react";
 import { Queue } from "../../components/queue";
 import { EmptyState } from "../../components/emptystate";
 import { QueueHeader } from "../../components/queueheader";
+import {getSession} from '~/utils/cookie'
 
 // Load data
-export const loader = async ({ params: { url } }) => {
+export const loader = async ({ params: { url }, request }) => {
+  const session = await getSession(request.headers.get('Cookie'))
+  const accessToken = session.get('accessToken')
+
+  console.log({accessToken})
+
   const { data: customer, error } = await supabase
     .from("customer")
     .select("company_name, id, url, queue(id, customer_id, publicUser, status)")
@@ -67,6 +73,7 @@ export default () => {
     setQueue([...customer.queue]);
   }, [customer]);
 
+  console.log(supabase.auth.user())
 
   return (
     <div className="mx-1 md:mx-8 lg:mx-24">

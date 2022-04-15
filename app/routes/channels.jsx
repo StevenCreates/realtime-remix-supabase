@@ -13,6 +13,7 @@ export const loader = async () => {
 
 export default () => {
   const { channels } = useLoaderData();
+  console.log(supabase.auth.user())
 
   return (
     <div>
