@@ -1,10 +1,11 @@
 import { useLoaderData, Form, useFetcher } from "@remix-run/react";
 import supabase from "~/utils/supabase";
 import { useEffect, useState } from "react";
+import { Queue } from "../../components/queue";
+import { EmptyState } from "../../components/emptystate";
 
 // Load data
 export const loader = async ({ params: { url } }) => {
-  console.log(url);
   const { data: customer, error } = await supabase
     .from("customer")
     .select("company_name, id, url, queue(id, customer_id, publicUser, status)")
@@ -43,7 +44,6 @@ export default () => {
   const fetcher = useFetcher();
 
   useEffect(() => {
-    console.log(customer.id);
     supabase
       .from(`queue:customer_id=eq.${customer.id}`)
       // .match(customer.id)
@@ -57,7 +57,6 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    console.log(fetcher);
     if (fetcher.data) {
       setQueue([...fetcher.data.customer.queue]);
     }
@@ -67,6 +66,7 @@ export default () => {
     setQueue([...customer.queue]);
   }, [customer]);
 
+  console.log(queue.length > 0)
   return (
     <div className="mx-1 md:mx-8 lg:mx-24" >
       {/* Put this in individual component */}
@@ -113,7 +113,7 @@ export default () => {
               <button className="bg-slate-400 p-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
                   aria-hidden="true"
                   role="img"
                   className="w-5"
@@ -122,8 +122,8 @@ export default () => {
                 >
                   <g fill="none">
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12c6.627 0 12-5.373 12-12S18.627 0 12 0zm.14 19.018c-3.868 0-7-3.14-7-7.018c0-3.878 3.132-7.018 7-7.018c1.89 0 3.47.697 4.682 1.829l-1.974 1.978v-.004c-.735-.702-1.667-1.062-2.708-1.062c-2.31 0-4.187 1.956-4.187 4.273c0 2.315 1.877 4.277 4.187 4.277c2.096 0 3.522-1.202 3.816-2.852H12.14v-2.737h6.585c.088.47.135.96.135 1.474c0 4.01-2.677 6.86-6.72 6.86z"
                       fill="currentColor"
                     />
@@ -135,7 +135,11 @@ export default () => {
         </div>
       </div>
       {/* End */}
-      <div className="bg-white border border-gray-300 overflow-hidden rounded-md">
+    {queue.length > 0 ?
+      <Queue list={queue} /> :
+      <EmptyState />
+    }
+      {/* <div className="bg-white border border-gray-300 overflow-hidden rounded-md">
         <ul className="divide-y divide-gray-300">
           {queue.map((item, index) => (
             <li key={item.id} index={index} className="">
@@ -251,7 +255,7 @@ export default () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
       <Form className="queue-form mt-4" method="post">
         <input type="hidden" name="customerId" value={customer.id} />
         <div>
@@ -273,7 +277,6 @@ export default () => {
               id="user"
               className="shadow-sm focus:ring-indigo-500 h-10 p-4 focus:border-indigo-500 block w-full border-gray-300 rounded-md"
               placeholder="User: UmbreonChaser"
-              // aria-describedby="email-optional"
             />
           </div>
         </div>
