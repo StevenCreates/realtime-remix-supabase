@@ -4,41 +4,46 @@ import { useEffect, useState } from "react";
 import { Queue } from "../../components/queue";
 import { EmptyState } from "../../components/emptystate";
 import { QueueHeader } from "../../components/queueheader";
-import {getSession} from '~/utils/cookies'
+import { getSession } from "~/utils/cookies";
+import authRequired from "~/utils/authRequired";
 
 // Load data
 export const loader = async ({ params: { url }, request }) => {
-  const session = await getSession(request.headers.get('Cookie'))
-  const accessToken = session.get('accessToken')
+  const session = await getSession(request.headers.get("Cookie"));
+  const accessToken = session.get("accessToken");
 
   supabase.auth.setAuth(accessToken);
 
   const { data: customer, error } = await supabase
-    .from("customer")
-    .select("company_name, id, url, queue(id, customer_id, publicUser, status)")
+    .from("customer_profile")
+    .select("*, queue(*)")
+    //might need to be more specific later
+    // .select("company_name, user_id, id, url, queue(id, customer_id, publicUser, status)")
     .match({ url })
     .single();
   if (error) {
     console.log(error.message);
   }
-
+  // console.log(customer)
   return {
     customer,
   };
 };
 
+
+
 // Mutate Data
 export const action = async ({ request }) => {
+  const { user } = await authRequired({ request });
   const formData = await request.formData();
   const publicUser = formData.get("user");
-  const customerId = formData.get("customerId");
   const { error } = await supabase.from("queue").insert({
-    name: publicUser,
-    publicUser: publicUser,
-    customer_id: customerId,
+    public_user: publicUser,
     status: "queued",
     is_complete: false,
+    user_id: user.id,
   });
+  
   if (error) {
     console.log(error.message);
   }
@@ -49,6 +54,7 @@ export default () => {
   const { customer } = useLoaderData();
   const [queue, setQueue] = useState([...customer.queue]);
   const fetcher = useFetcher();
+  // console.log(customer.queue);
 
   useEffect(() => {
     supabase
@@ -73,14 +79,14 @@ export default () => {
     setQueue([...customer.queue]);
   }, [customer]);
 
-  console.log(supabase.auth.user())
 
   return (
     <div className="mx-1 md:mx-8 lg:mx-24">
-      <QueueHeader companyName={customer.company_name} />
+      <QueueHeader companyName={customer.queue_title} />
       {queue.length > 0 ? <Queue list={queue} /> : <EmptyState />}
       <Form className="queue-form mt-4" method="post">
         <input type="hidden" name="customerId" value={customer.id} />
+        <input type="hidden" name="uid" value={customer.user_id} />
         <div>
           <div className="flex justify-between">
             <label

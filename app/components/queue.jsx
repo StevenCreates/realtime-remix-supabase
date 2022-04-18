@@ -53,7 +53,7 @@ export const Queue = ({ list }) => {
                 // }}
                 className="text-lg leading-6 font-medium text-gray-900 w-100 flex items-center"
               >
-                {item.publicUser}
+                {item.public_user}
               </div>
               <div className="w-full text-right h-full">
                 <button
