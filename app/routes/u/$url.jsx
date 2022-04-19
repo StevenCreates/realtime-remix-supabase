@@ -59,10 +59,11 @@ export const action = async ({ request }) => {
 
 export default () => {
   const { customer, isAuthenticated, user } = useLoaderData();
-  const [queue, setQueue] = useState([...customer.queue]);
+  const [queue, setQueue] = useState(customer ? [...customer.queue] : []);
   const fetcher = useFetcher();
   const transition = useTransition();
   const messageRef = useRef();
+  
 
   useEffect(() => {
     if (transition.state !== "submitting") {
@@ -73,17 +74,19 @@ export default () => {
   }, [transition.state]);
 
   useEffect(() => {
-    supabase
-      .from(`queue:customer_id=eq.${customer.id}`)
-      // .match(customer.id)
-      .on("*", () => {
-        fetcher.load(`/u/${customer.url}`);
-      })
-      .subscribe();
-    return () => {
-      supabase.unsubscribe();
-    };
-  }, []);
+    if(customer !== null) {
+      supabase
+        .from(`queue:customer_id=eq.${customer.id}`)
+        // .match(customer.id)
+        .on("*", () => {
+          fetcher.load(`/u/${customer.url}`);
+        })
+        .subscribe();
+      return () => {
+        supabase.unsubscribe();
+      };
+    }
+  }, [customer]);
 
   useEffect(() => {
     if (fetcher.data) {
@@ -92,12 +95,14 @@ export default () => {
   }, [fetcher.data]);
 
   useEffect(() => {
-    setQueue([...customer.queue]);
+    if(customer !== null) {
+    setQueue([...customer.queue])
+    }
   }, [customer]);
 
-  return (
+ return customer ? (
     <div className="mx-1 md:mx-8 lg:mx-24">
-      <QueueHeader companyName={customer.queue_title} />
+      <QueueHeader companyName={customer ? customer?.queue_title : "No User"} />
       {queue.length > 0 ? (
         <Queue list={queue} />
       ) : (
@@ -137,5 +142,5 @@ export default () => {
         </Form>
       )}
     </div>
-  );
+  ) : <EmptyState state="no_customer" />
 };
