@@ -58,7 +58,12 @@ export const action = async ({ request }) => {
 };
 
 export default () => {
-  const { customer, isAuthenticated, user } = useLoaderData();
+  const {
+    customer,
+    isAuthenticated,
+    // Will need user eventually
+    //  user
+  } = useLoaderData();
   const [queue, setQueue] = useState(customer ? [...customer.queue] : []);
   const fetcher = useFetcher();
   const transition = useTransition();
@@ -85,6 +90,7 @@ export default () => {
         supabase.unsubscribe();
       };
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customer]);
 
   useEffect(() => {

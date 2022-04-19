@@ -1,11 +1,6 @@
 import React from "react";
 import { ExclamationIcon } from '@heroicons/react/outline'
 
-const stateOptions = {
-  authenticated: 'authenticated',
-  no_customer: 'no_customer',
-  user_view: 'user_view'
-}
 
 const textOptions = {
   authenticated:
@@ -32,11 +27,10 @@ const stateClasses = {
 
 export const EmptyState = ({ state = 'no_customer' }) => {
 
-  const view = stateOptions[state]
+  //TO DO: Add a single object for for text and icons and state
+
   const text = textOptions[state]
   const style = stateClasses[state || 'default']
-
-  console.log(state)
 
 
   return (
