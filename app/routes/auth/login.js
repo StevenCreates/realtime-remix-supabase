@@ -8,7 +8,7 @@ export const action = async ({ request }) => {
     session.set('accessToken', accessToken)
     const cookie = await commitSession(session)
 
-    return redirect("/u/UmbreonRipAndShip", {
+    return redirect("/dashboard", {
         headers: {
             "Set-Cookie": cookie,
         }

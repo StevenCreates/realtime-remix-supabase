@@ -1,6 +1,11 @@
-import { useLoaderData, Form, useFetcher } from "@remix-run/react";
+import {
+  useLoaderData,
+  Form,
+  useFetcher,
+  useTransition,
+} from "@remix-run/react";
 import supabase from "~/utils/supabase";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Queue } from "../../components/queue";
 import { EmptyState } from "../../components/emptystate";
 import { QueueHeader } from "../../components/queueheader";
@@ -11,7 +16,7 @@ import authRequired from "~/utils/authRequired";
 export const loader = async ({ params: { url }, request }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const accessToken = session.get("accessToken");
-
+  const { user } = await authRequired({ request });
   supabase.auth.setAuth(accessToken);
 
   const { data: customer, error } = await supabase
@@ -24,13 +29,15 @@ export const loader = async ({ params: { url }, request }) => {
   if (error) {
     console.log(error.message);
   }
-  // console.log(customer)
+
+  const isAuthenticated = user?.id === customer?.id;
+
   return {
     customer,
+    isAuthenticated,
+    user,
   };
 };
-
-
 
 // Mutate Data
 export const action = async ({ request }) => {
@@ -43,7 +50,7 @@ export const action = async ({ request }) => {
     is_complete: false,
     user_id: user.id,
   });
-  
+
   if (error) {
     console.log(error.message);
   }
@@ -51,10 +58,19 @@ export const action = async ({ request }) => {
 };
 
 export default () => {
-  const { customer } = useLoaderData();
+  const { customer, isAuthenticated, user } = useLoaderData();
   const [queue, setQueue] = useState([...customer.queue]);
   const fetcher = useFetcher();
-  // console.log(customer.queue);
+  const transition = useTransition();
+  const messageRef = useRef();
+
+  useEffect(() => {
+    if (transition.state !== "submitting") {
+      console.log(transition.state);
+      //reset input
+      messageRef.current?.reset();
+    }
+  }, [transition.state]);
 
   useEffect(() => {
     supabase
@@ -79,42 +95,47 @@ export default () => {
     setQueue([...customer.queue]);
   }, [customer]);
 
-
   return (
     <div className="mx-1 md:mx-8 lg:mx-24">
       <QueueHeader companyName={customer.queue_title} />
-      {queue.length > 0 ? <Queue list={queue} /> : <EmptyState />}
-      <Form className="queue-form mt-4" method="post">
-        <input type="hidden" name="customerId" value={customer.id} />
-        <input type="hidden" name="uid" value={customer.user_id} />
-        <div>
-          <div className="flex justify-between">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              User
-            </label>
-            <span className="text-sm text-gray-500" id="email-optional">
-              Required
-            </span>
+      {queue.length > 0 ? (
+        <Queue list={queue} />
+      ) : (
+        <EmptyState isAuthenticate={isAuthenticated} />
+      )}
+      {isAuthenticated && (
+        <Form ref={messageRef} className="queue-form mt-4" method="post">
+          <input type="hidden" name="customerId" value={customer.id} />
+          <input type="hidden" name="uid" value={customer.user_id} />
+          <div>
+            <div className="flex justify-between">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                User
+              </label>
+              <span className="text-sm text-gray-500" id="email-optional">
+                Required
+              </span>
+            </div>
+            <div className="mt-1">
+              <input
+                type="text"
+                name="user"
+                id="user"
+                className="shadow-sm focus:ring-indigo-500 h-10 p-4 focus:border-indigo-500 block w-full border-gray-300 rounded-md"
+                placeholder="User: UmbreonChaser"
+              />
+            </div>
           </div>
-          <div className="mt-1">
-            <input
-              type="text"
-              name="user"
-              id="user"
-              className="shadow-sm focus:ring-indigo-500 h-10 p-4 focus:border-indigo-500 block w-full border-gray-300 rounded-md"
-              placeholder="User: UmbreonChaser"
-            />
+          <div className="w-full text-right mt-2">
+            <button className="button inline-flex items-center p-1.5 border border-transparent rounded shadow-sm text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+              Add
+            </button>
           </div>
-        </div>
-        <div className="w-full text-right mt-2">
-          <button className="button inline-flex items-center p-1.5 border border-transparent rounded shadow-sm text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
-            Add
-          </button>
-        </div>
-      </Form>
+        </Form>
+      )}
     </div>
   );
 };
