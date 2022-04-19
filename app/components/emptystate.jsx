@@ -30,7 +30,7 @@ const stateClasses = {
   default: `py-12 rounded bg-white shadow-sm mx-auto`
 }
 
-export const EmptyState = ({ isAuthenticate, state = 'no_customer' }) => {
+export const EmptyState = ({ state = 'no_customer' }) => {
 
   const view = stateOptions[state]
   const text = textOptions[state]

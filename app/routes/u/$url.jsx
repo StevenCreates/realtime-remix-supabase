@@ -63,7 +63,6 @@ export default () => {
   const fetcher = useFetcher();
   const transition = useTransition();
   const messageRef = useRef();
-  
 
   useEffect(() => {
     if (transition.state !== "submitting") {
@@ -74,7 +73,7 @@ export default () => {
   }, [transition.state]);
 
   useEffect(() => {
-    if(customer !== null) {
+    if (customer !== null) {
       supabase
         .from(`queue:customer_id=eq.${customer.id}`)
         // .match(customer.id)
@@ -95,18 +94,18 @@ export default () => {
   }, [fetcher.data]);
 
   useEffect(() => {
-    if(customer !== null) {
-    setQueue([...customer.queue])
+    if (customer !== null) {
+      setQueue([...customer.queue]);
     }
   }, [customer]);
 
- return customer ? (
+  return customer ? (
     <div className="mx-1 md:mx-8 lg:mx-24">
       <QueueHeader companyName={customer ? customer?.queue_title : "No User"} />
       {queue.length > 0 ? (
         <Queue list={queue} />
       ) : (
-        <EmptyState isAuthenticate={isAuthenticated} />
+        <EmptyState state={isAuthenticated ? "authenticated" : "user_view"} />
       )}
       {isAuthenticated && (
         <Form ref={messageRef} className="queue-form mt-4" method="post">
@@ -142,5 +141,7 @@ export default () => {
         </Form>
       )}
     </div>
-  ) : <EmptyState state="no_customer" />
+  ) : (
+    <EmptyState state="no_customer" />
+  );
 };
