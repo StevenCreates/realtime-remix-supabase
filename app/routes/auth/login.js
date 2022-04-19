@@ -8,7 +8,7 @@ export const action = async ({ request }) => {
     session.set('accessToken', accessToken)
     const cookie = await commitSession(session)
 
-    return redirect("/dashboard", {
+    return redirect("/validate", {
         headers: {
             "Set-Cookie": cookie,
         }
