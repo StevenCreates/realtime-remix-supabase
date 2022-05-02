@@ -10,12 +10,23 @@ export default () => {
     const formData = new FormData(e.target)
     const email = formData.get('email')
     const password = formData.get('password')
+    const paid_tier = formData.get('paid_tier')
+    const url = formData.get('url')
+    const queue_title = formData.get('queue_title')
 
-    const {data, error} = await supabase.auth.signUp({
-      email,
-      password
-    })
-
+    const {data, error} = await supabase.auth.signUp(
+      {
+        email,
+        password,
+      },
+      {
+        data: {
+          paid_tier,
+          url,
+          queue_title
+        }
+      }
+    )
     console.log({data, error})
   }
 

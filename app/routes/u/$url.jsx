@@ -86,9 +86,9 @@ export default () => {
           fetcher.load(`/u/${customer.url}`);
         })
         .subscribe();
-      return () => {
-        supabase.unsubscribe();
-      };
+      // return () => {
+      //   supabase.unsubscribe();
+      // };
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customer]);
