@@ -57,7 +57,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
+      <body className="h-full box-border">
         <Outlet />
         <script
           dangerouslySetInnerHTML={{

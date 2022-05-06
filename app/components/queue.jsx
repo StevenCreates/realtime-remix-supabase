@@ -9,11 +9,12 @@ const stateVariable = {
 export const Queue = ({ list }) => {
 
  const values = initializeRows()
+ 
 
   return (
     <div
-      style={{ maxHeight: "26rem" }}
-      className="bg-white border -z-10 border-gray-300 overflow-hidden overflow-y-scroll rounded-md"
+      style={{ maxHeight: "32rem" }}
+      className="bg-white border -z-10 border-gray-300  overflow-y-scroll rounded-md"
     >
       <ul className="divide-y divide-gray-300">
         {list.map((item, index) => {

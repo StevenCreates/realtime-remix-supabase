@@ -106,7 +106,7 @@ export default () => {
   }, [customer]);
 
   return customer ? (
-    <div className="mx-1 md:mx-8 lg:mx-24">
+    <div className="max-h-full overflow-hidden box-border  p-4 sm:p-4 md:p-8 lg:p-10 ">
       <QueueHeader companyName={customer ? customer?.queue_title : "No User"} />
       {queue.length > 0 ? (
         <Queue list={queue} />

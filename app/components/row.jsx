@@ -16,8 +16,30 @@ const statusIconSelect = {
   queued: <ClockIcon className="h-full w-full text-zinc-700" />,
 };
 
+const statusSelect = {
+  current: <LighteningIcon className="h-4 w-4 animate-pulse text-amber-500" />,
+  next: (
+    <span
+      className="bg-indigo-50 h-4 w-4 rounded-full flex items-center justify-center"
+      aria-hidden="true"
+    >
+      <span className="bg-indigo-400 animate-pulse h-2 w-2 rounded-full" />
+    </span>
+  ),
+  queued: (
+    <span
+      className=" bg-slate-300 h-4 w-4 rounded-full flex items-center justify-center"
+      aria-hidden="true"
+    >
+      <span className="bg-slate-500 h-2 w-2 rounded-full" />
+    </span>
+  ),
+};
+
 export const Row = ({ user, products, state }) => {
   const statusIcon = statusIconSelect[state];
+  const status = statusSelect[state];
+
 
   return (
     <div className="w-full grid grid-cols-5 grid-rows-2 h-14 box-border bg-white">
@@ -27,7 +49,8 @@ export const Row = ({ user, products, state }) => {
 
         className="overflow-hidden text-amber-500 justify-center items-center flex box-border p-2 w-full h-full bg-zinc-200"
       >
-        {statusIcon}
+        {/* {statusIcon} */}
+        {status}
       </div>
       <div
         style={{ gridColumnStart: 2, gridColumnEnd: 5 }}
@@ -49,11 +72,11 @@ export const Row = ({ user, products, state }) => {
           href="#_"
           className="box-border border-r border-zinc-100 text-center w-1/2 p-4 inline-flex items-center justify-center px-2 py-1 h-full bg-zinc-200 cursor-pointer ease focus:outline-none"
         >
-          {state === 'current' ?
-          <CheckCircleIcon className=" text-teal-500 h-10 w-10" />
-          :
-          <ChevronUpIcon className="text-white h-10 w-10" />
-          }
+          {state === "current" ? (
+            <CheckCircleIcon className=" text-teal-500 h-10 w-10" />
+          ) : (
+            <ChevronUpIcon className="text-white h-10 w-10" />
+          )}
         </button>
         <button
           href="#_"
