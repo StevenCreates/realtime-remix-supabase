@@ -15,7 +15,7 @@ export const action = async ({ request }) => {
   if (error) {
     console.log(error.message);
   }
-  console.log(customer)
+  // console.log(customer)
   if (!user) {
     return redirect("/login");
   }

@@ -1,6 +1,6 @@
 import { Header } from "../components/header";
 import { GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline'
-
+import { Link } from "@remix-run/react";
 
 const navigation = {
   main: [

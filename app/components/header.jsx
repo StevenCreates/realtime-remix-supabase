@@ -1,13 +1,12 @@
-import React from 'react'
-
+import React from "react";
+import { Link } from "@remix-run/react";
 
 const navigation = [
-    { name: 'Solutions', href: '#' },
-    { name: 'Pricing', href: '#' },
-    { name: 'Docs', href: '#' },
-    { name: 'Company', href: '#' },
-  ]
-
+  { name: "Solutions", href: "#" },
+  { name: "Pricing", href: "#" },
+  { name: "Docs", href: "#" },
+  { name: "Company", href: "#" },
+];
 
 export const Header = () => {
   return (
@@ -25,35 +24,43 @@ export const Header = () => {
             </a>
             <div className="hidden ml-10 space-x-8 md:block lg:block">
               {navigation.map((link) => (
-                <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-base font-medium text-white hover:text-indigo-50"
+                >
                   {link.name}
                 </a>
               ))}
             </div>
           </div>
           <div className="ml-10 space-x-4">
-            <button
-              href="#"
+            <Link
+              to={`/login`}
               className="inline-block bg-brand-blue py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75"
             >
               Sign in
-            </button>
-            <button
-              href="#"
+            </Link>
+            <Link
+              to="/register"
               className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-brand-blue hover:bg-fuchsia-50"
             >
               Sign up
-            </button>
+            </Link>
           </div>
         </div>
         <div className="py-4 flex flex-wrap justify-center space-x-6 md:hidden lg:hidden">
           {navigation.map((link) => (
-            <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-base font-medium text-white hover:text-indigo-50"
+            >
               {link.name}
             </a>
           ))}
         </div>
       </nav>
     </header>
-  )
-}
+  );
+};

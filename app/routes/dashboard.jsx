@@ -39,7 +39,7 @@ export const loader = async ({ request }) => {
 export default () => {
   const { customer } = useLoaderData();
   //   console.log(supabase.auth.user()
-  console.log("test", customer);
+  // console.log("test", customer);
 
   const navigation = [
     { name: "Dashboard", icon: HomeIcon, to: "#", current: true },

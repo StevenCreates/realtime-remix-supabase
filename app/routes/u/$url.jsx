@@ -71,7 +71,7 @@ export default () => {
 
   useEffect(() => {
     if (transition.state !== "submitting") {
-      console.log(transition.state);
+      // console.log(transition.state);
       //reset input
       messageRef.current?.reset();
     }
