@@ -34,13 +34,13 @@ export const Header = () => {
           <div className="ml-10 space-x-4">
             <button
               href="#"
-              className="inline-block bg-violet-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75"
+              className="inline-block bg-brand-blue py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75"
             >
               Sign in
             </button>
             <button
               href="#"
-              className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-violet-500 hover:bg-fuchsia-50"
+              className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-brand-blue hover:bg-fuchsia-50"
             >
               Sign up
             </button>
