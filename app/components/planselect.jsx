@@ -39,7 +39,7 @@ export const PlanSelect = () => {
               The right price for you, whoever you are
             </p>
             <p className="text-xl text-gray-300">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum sequi unde repudiandae natus.
+              {/* Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum sequi unde repudiandae natus. */}
             </p>
           </div>
         </div>

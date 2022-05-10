@@ -42,7 +42,7 @@ export const Header = () => {
               Sign in
             </Link>
             <Link
-              to="/register"
+              to="/tierselect"
               className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-brand-blue hover:bg-fuchsia-50"
             >
               Sign up
