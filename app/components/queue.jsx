@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row } from "./row";
-import {initializeRows} from "~/utils/organizeRows"
+// import {initializeRows} from "~/utils/organizeRows"
+import { moveRowUp, moveRowDown } from "~/utils/organizeRows";
+
 const stateVariable = {
   0: 'current',
   1: 'next',
 }
 
 export const Queue = ({ list }) => {
+const [queue, setQueue] = useState(list)
 
- const values = initializeRows()
- 
+
+React.useEffect(() => {
+  const organizedQueue = list.sort(function(a, b) {
+    return a.position - b.position;
+  });
+  setQueue(organizedQueue)
+}, [list])
+
+
+
 
   return (
     <div
@@ -17,12 +28,12 @@ export const Queue = ({ list }) => {
       className="bg-white border -z-10 border-gray-300  overflow-y-scroll rounded-md"
     >
       <ul className="divide-y divide-gray-300">
-        {list.map((item, index) => {
+        {queue.map((item, index) => {
           const state = stateVariable[index] ?? 'queued'
 
           return (
             <li key={item.id} index={index} className="">
-              <Row user={item.public_user} products={item.items} state={state}  />
+              <Row user={item} products={item.items} state={state} onRowUpClick={() => moveRowUp(item)}  onRowDownClick={moveRowDown} onFinishClick={() => console.log('finished')}/>
             </li>
           );
         })}

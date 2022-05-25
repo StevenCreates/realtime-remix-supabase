@@ -1,20 +1,11 @@
 import {
-  BeakerIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  ClockIcon,
 } from "@heroicons/react/outline";
 import React from "react";
 import { LighteningIcon } from "./icons/lightening";
-
-const statusIconSelect = {
-  current: (
-    <LighteningIcon className="h-full w-full animate-pulse text-amber-500" />
-  ),
-  next: <BeakerIcon className="h-full w-full text-indigo-700" />,
-  queued: <ClockIcon className="h-full w-full text-zinc-700" />,
-};
+import { Form } from "@remix-run/react";
 
 const statusSelect = {
   current: <LighteningIcon className="h-4 w-4 animate-pulse text-amber-500" />,
@@ -36,10 +27,27 @@ const statusSelect = {
   ),
 };
 
-export const Row = ({ user, products, state }) => {
-  const statusIcon = statusIconSelect[state];
+export const Row = ({
+  user,
+  products,
+  state,
+  onRowUpClick,
+  onRowDownClick,
+  onFinishClick,
+}) => {
   const status = statusSelect[state];
 
+  const handleRowDownClick = () => {
+    onRowDownClick(user);
+  };
+
+  const handleRowUpClick = () => {
+    if (user.position === 1) {
+      onFinishClick(user);
+    } else {
+      onRowUpClick(user);
+    }
+  };
 
   return (
     <div className="w-full grid grid-cols-5 grid-rows-2 h-14 box-border bg-white">
@@ -56,7 +64,7 @@ export const Row = ({ user, products, state }) => {
         style={{ gridColumnStart: 2, gridColumnEnd: 5 }}
         className="overflow-hidden text-gray-800  pl-4 pt-0.5 h-full w-full bg-white"
       >
-        <div className="">{user}</div>
+        <div className="">{user.public_user}</div>
       </div>
       <div
         style={{ gridColumnStart: 2, gridColumnEnd: 5 }}
@@ -64,12 +72,20 @@ export const Row = ({ user, products, state }) => {
       >
         <div className="">{products}</div>
       </div>
-      <div
+      {/* <div
         style={{ gridRowStart: 1, gridRowEnd: 3, gridColumnStart: 5 }}
         className="overflow-hidden w-full h-full flex"
+      > */}
+      <Form
+        style={{ gridRowStart: 1, gridRowEnd: 3, gridColumnStart: 5 }}
+        className="overflow-hidden w-full h-full flex"
+        // method="post"
       >
         <button
-          href="#_"
+          onClick={handleRowUpClick}
+          type="action"
+          name="action"
+          value="up"
           className="box-border border-r border-zinc-100 text-center w-1/2 p-4 inline-flex items-center justify-center px-2 py-1 h-full bg-zinc-200 cursor-pointer ease focus:outline-none"
         >
           {state === "current" ? (
@@ -78,13 +94,16 @@ export const Row = ({ user, products, state }) => {
             <ChevronUpIcon className="text-white h-10 w-10" />
           )}
         </button>
+        <input type="hidden" name="user" value={user} />
         <button
-          href="#_"
+          type="action"
+          onClick={handleRowDownClick}
           className="box-border text-center w-1/2 p-4 inline-flex items-center justify-center  px-2 py-1 h-full bg-zinc-200 cursor-pointer ease focus:outline-none"
         >
           <ChevronDownIcon className="text-white h-10 w-10" />
         </button>
-      </div>
+      </Form>
+      {/* </div> */}
     </div>
   );
 };

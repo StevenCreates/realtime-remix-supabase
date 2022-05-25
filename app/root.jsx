@@ -21,6 +21,7 @@ export const meta = () => ({
 export const loader = () => {
   return {
     env: {
+      PUBLIC_STRIPE_KEY: process.env.PUBLIC_STRIPE_KEY,
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_KEY: process.env.SUPABASE_KEY,
     },
@@ -37,7 +38,7 @@ export default function App() {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log({event, session})
+      // console.log({event, session})
       if (event === "SIGNED_IN") {
         fetcher.submit(
           {

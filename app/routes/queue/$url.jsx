@@ -42,13 +42,16 @@ export const loader = async ({ params: { url }, request }) => {
 // Mutate Data
 export const action = async ({ request }) => {
   const { user } = await authRequired({ request });
+  // console.log(request)
   const formData = await request.formData();
   const publicUser = formData.get("user");
+  const position = formData.get("queuePosition");
   const { error } = await supabase.from("queue").insert({
     public_user: publicUser,
     status: "queued",
     is_complete: false,
     user_id: user.id,
+    position
   });
 
   if (error) {
@@ -57,22 +60,32 @@ export const action = async ({ request }) => {
   return null;
 };
 
+
+
 export default () => {
   const {
     customer,
     isAuthenticated,
-    // Will need user eventually
-    //  user
   } = useLoaderData();
   const [queue, setQueue] = useState(customer ? [...customer.queue] : []);
   const fetcher = useFetcher();
   const transition = useTransition();
   const messageRef = useRef();
+  const [loading, setLoading] = useState(false)
+
+// console.log(transition)
+
+useEffect(() => {
+  if(transition.state === "submitting" ){
+    setLoading(true)
+  } else (
+    setLoading(false)
+  )
+}, [transition])
+
 
   useEffect(() => {
     if (transition.state !== "submitting") {
-      // console.log(transition.state);
-      //reset input
       messageRef.current?.reset();
     }
   }, [transition.state]);
@@ -81,17 +94,12 @@ export default () => {
     if (customer !== null) {
       supabase
         .from(`queue:customer_id=eq.${customer.id}`)
-        // .match(customer.id)
         .on("*", () => {
           fetcher.load(`/u/${customer.url}`);
         })
         .subscribe();
-      // return () => {
-      //   supabase.unsubscribe();
-      // };
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customer]);
+  }, [customer, fetcher, queue]);
 
   useEffect(() => {
     if (fetcher.data) {
@@ -105,7 +113,7 @@ export default () => {
     }
   }, [customer]);
 
-  return customer ? (
+  return customer || !loading ? (
     <div className="max-h-full overflow-hidden box-border  p-4 sm:p-4 md:p-8 lg:p-10 ">
       <QueueHeader companyName={customer ? customer?.queue_title : "No User"} />
       {queue.length > 0 ? (
@@ -117,6 +125,7 @@ export default () => {
         <Form ref={messageRef} className="queue-form mt-4" method="post">
           <input type="hidden" name="customerId" value={customer.id} />
           <input type="hidden" name="uid" value={customer.user_id} />
+          <input type="hidden" name="queuePosition" value={queue.length + 1} />
           <div>
             <div className="flex justify-between">
               <label
