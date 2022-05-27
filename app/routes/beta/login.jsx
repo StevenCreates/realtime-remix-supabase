@@ -20,14 +20,14 @@ export default () => {
     console.log({data, error})
   }
 
-  const logout = async () => {
-    await supabase.auth.signOut();
+  // const login = async () => {
+  //   await supabase.auth.signOut();
 
-    fetcher.submit(null, {
-      method: "post",
-      action: "/auth/logout",
-    });
-  };
+  //   fetcher.submit(null, {
+  //     method: "post",
+  //     action: "/auth/login",
+  //   });
+  // };
 
   return (
     <>

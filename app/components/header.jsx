@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "@remix-run/react";
 
 const navigation = [
-  { name: "Solutions", href: "#" },
-  { name: "Pricing", href: "#" },
-  { name: "Docs", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "OnlyMinty", href: "#" },
+  // { name: "Pricing", href: "#" },
+  // { name: "Docs", href: "#" },
+  // { name: "Company", href: "#" },
 ];
 
 export const Header = () => {
