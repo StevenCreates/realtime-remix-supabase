@@ -17,17 +17,13 @@ const navigation = {
   social: [
     {
       name: "Ebay",
-      href: "#",
-      icon: (props) => (
-        <EbayIcon {...props} />
-      ),
+      href: "https://www.ebay.com/usr/onlymintycom",
+      icon: (props) => <EbayIcon {...props} />,
     },
     {
       name: "TikTok",
       href: "https://www.tiktok.com/@onlyminty.com",
-      icon: (props) => (
-          <TiktokIcon {...props}/>
-      ),
+      icon: (props) => <TiktokIcon {...props} />,
     },
     // {
     //   name: "GitHub",
@@ -60,8 +56,7 @@ const features = [
   },
   {
     name: "Seller Verification (coming soon)",
-    description:
-      "More details to come.",
+    description: "More details to come.",
     icon: LightningBoltIcon,
   },
 ];
@@ -99,8 +94,9 @@ export default function Index() {
                     self/auto managed queue, and notifications to let a user
                     know they're up next or when you're live. Deeper insights to
                     what times and products do the best. With more coming soon!
-                    If you would like access to beta email steven@stevencreates.tech .
-                    In the meantime checkout the ebay store in the social link at the bottom of the page.
+                    If you would like access to beta email
+                    steven@stevencreates.tech . In the meantime checkout the
+                    ebay store in the social link at the bottom of the page.
                   </p>
                   <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
                     <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
@@ -186,4 +182,4 @@ export default function Index() {
       </footer>
     </>
   );
-};
+}
