@@ -37,7 +37,7 @@ const navigation = {
 
 export default () => {
   return (
-    <div className="w-full h-full bg-zinc-800 p-4">
+    <div className="w-full h-screen overflow-y-scroll overflow-x-hidden bg-zinc-800 p-4">
       <div className="flex-1 text-center min-w-0">
         <h2 className="text-2xl font-bold leading-7 text-white sm:text-3xl sm:truncate">
           OnlyMinty.com
