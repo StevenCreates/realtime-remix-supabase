@@ -18,8 +18,20 @@ const navigation = {
   amazon: [
     {
       name: "Centering Tool",
-      href: "#",
+      href: "https://amzn.to/3mwmk59",
     },
+    {
+        name: "Top Loaders",
+        href: "https://amzn.to/3MBDBV5",
+    },
+    {
+        name: "High Quality Penny Sleeves",
+        href: "https://amzn.to/3O1G504"
+    },
+    {
+        name: "Graded Card Sleeves",
+        href: "https://amzn.to/3znHjPc"
+    }
   ],
 };
 
