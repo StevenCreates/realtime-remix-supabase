@@ -26,11 +26,11 @@ const navigation = {
     },
     {
         name: "High Quality Penny Sleeves",
-        href: "https://amzn.to/3O1G504"
+        href: "https://amzn.to/3HqLCLL"
     },
     {
         name: "Graded Card Sleeves",
-        href: "https://amzn.to/3znHjPc"
+        href: "https://amzn.to/3HbZol8"
     }
   ],
 };
