@@ -18,11 +18,11 @@ const navigation = {
   amazon: [
     {
       name: "Centering Tool",
-      href: "https://amzn.to/3mwmk59",
+      href: "https://amzn.to/3HcWWej",
     },
     {
         name: "Top Loaders",
-        href: "https://amzn.to/3MBDBV5",
+        href: "https://amzn.to/39aZGMB",
     },
     {
         name: "High Quality Penny Sleeves",
