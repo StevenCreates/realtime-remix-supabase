@@ -31,6 +31,18 @@ const navigation = {
     {
         name: "Graded Card Sleeves",
         href: "https://amzn.to/3HbZol8"
+    },
+    {
+        name: "Black Light",
+        href: "https://amzn.to/3OcMBB0"
+    },
+    {
+        name: "Magnifying Lamp",
+        href: "https://amzn.to/3mDLuyP"
+    },
+    {
+        name: "Sticky Tabs (note tabs)",
+        href: "https://amzn.to/3tsaYms"
     }
   ],
 };
