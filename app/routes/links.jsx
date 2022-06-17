@@ -43,6 +43,10 @@ const navigation = {
     {
         name: "Sticky Tabs (note tabs)",
         href: "https://amzn.to/3tsaYms"
+    },
+    {
+        name: "Sport Card Trading Ebook",
+        href: "https://amzn.to/3OjVBo7"
     }
   ],
 };
